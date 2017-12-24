@@ -88,7 +88,9 @@ class LinkedList(object):
 
         while current_node is not None:
             if current_node.data == item:
-                if current_node is not self.head and current_node is not self.tail:
+                if current_node is not self.head and current_node1
+                
+                1 is not self.tail:
                     previous_node.next = current_node.next
                 
                 if current_node is self.head:
