@@ -25,24 +25,35 @@ class HashTable(object):
 
     def keys(self):
         """Return a list of all keys in this hash table.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(n^2) Why and under what conditions?"""
         # Collect all keys in each bucket
-
+        all_keys = []
+        for bucket in self.buckets:
+            for key, value in bucket.items():
+                all_keys.append(key)
+        return all_keys
 
 
     def values(self):
         """Return a list of all values in this hash table.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(n^2) Why and under what conditions?"""
         # TODO: Loop through all buckets
         # TODO: Collect all values in each bucket
-
+        all_values = []
+        for bucket in self.buckets:
+            for key,value in bucket.items():
+                all_values.append(value)
+        return all_values
 
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(n) Why and under what conditions?"""
         # Collect all pairs of key-value entries in each bucket
-
+        all_items = []
+        for bucket in self.buckets:
+            all_items.extend(bucket.items())
+        return all_items
 
 
     def length(self):
@@ -50,7 +61,11 @@ class HashTable(object):
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all buckets
         # TODO: Count number of key-value entries in each bucket
-
+        count = 0
+        for bucket in self.buckets:
+            for items in bucket.items():
+                count += 1
+        return count
 
 
     def contains(self, key):
@@ -70,7 +85,8 @@ class HashTable(object):
         # TODO: If found, return value associated with given key
         # TODO: Otherwise, raise error to tell user get failed
         # Hint: raise KeyError('Key not found: {}'.format(key))
-
+        index = self._bucket_index(key)
+        
                 
 
     def set(self, key, value):
