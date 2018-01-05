@@ -1,13 +1,20 @@
 
 class Node(object):
     def __init__(self, data):
-
+        self.data = data
+        self.next = None
 
     def __repr__(self):
         return 'Node({!r})'.format(self.data)
 
 class LinkedList(object):
     def __init__(self, items=None):
+        self.head = None
+        self.tail = None
+
+        if items is not None:
+            for item in items:
+                self.append(item)
 
     def __str__(self):
         items = ['({!r})'.format(item) for item in self.items()]
@@ -17,30 +24,87 @@ class LinkedList(object):
         return 'LinkedList({!r})'.format(self.items())
 
     def items(self):
-
+        items = []
+        node = self.head
+        while node is not None:
+            items.append(node.data)
+            node = node.next
         return items
 
     def is_empty(self):
         return self.head is None
 
     def length(self):
+        if self.head is None:
+            total = 0
+            return total
+        else:
+            current_node = self.head
 
+            total = 1
+
+            while current_node.next != None:
+                total += 1
+                current_node = current_node.next
+            return total
 
     
     def append(self, item):
+        new_node = Node(item)
+        if self.head == None:
+            self.head == new_node
 
+        if self.tail != None:
+            self.tail.next = new_node
+        self.tail = new_node
 
 
     def prepend(self, item):
+        new_node = Node(item)
 
+        if self.head is None and self.tail is None:
+            self.head = new_node
+            self.tail = new_node
+        elif self.head == self.tail:
+            self.head = new_node
+            self.head.next = self.tail
+        else:
+            new_node.next = self.head
+            self.head = new_node
         
 
     def find(self, quality):
+        current = self.head
+
+        while current != None:
+            if quality(current.data):
+                return current.data
+            current = current.next
+        return None
 
 
     def delete(self, item):
-        
-            
+        current_node = self.head
+        previous_node = None
+
+        while current_node is not None:
+            if current_node.data == item:
+                if current_node is not self.head and current_node is not self.tail:
+                    previous_node.next = current_node.next
+
+                if current_node is self.head:
+                    self.head = current_node.next
+
+                if current_node is self.tail:
+                    if previous_node is not None:
+                        previous_node.next = None
+                    self.tail = previous_node
+                return
+            previous_node = current_node
+            current_node = current_node.next
+        raise ValueError("Node does not exist")
+
+
 
 
 def test_linked_list():
